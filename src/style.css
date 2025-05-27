@@ -1,0 +1,20 @@
+@import "tailwindcss";
+@import "tailwindcss-primeui";
+@import 'primeicons/primeicons.css';
+
+@custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
+
+.page {
+    box-shadow: 0 0 0 5px var(--color-zinc-100);
+    margin: 10px 0;
+    padding: 20px;
+    min-height: 800px;
+}
+
+.content-box {
+    h1 {
+        font-size: var(--text-2xl);
+        font-weight: bold;
+        border-bottom: 1px solid;
+    }
+}
