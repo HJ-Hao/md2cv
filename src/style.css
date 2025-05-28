@@ -9,6 +9,9 @@
     margin: 10px 0;
     padding: 20px;
     min-height: 800px;
+    max-height: 800px;
+    overflow: hidden;
+    box-sizing: content-box;
 }
 
 .content-box {

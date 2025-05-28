@@ -36,7 +36,7 @@
         </div>
 
             <!-- 右侧预览区域 -->
-            <div class="w-1/2 p-5 overflow-auto bg-surface-50 dark:bg-surface-900 border-l border-surface-200 dark:border-surface-700">
+            <div class=" p-5 overflow-auto bg-surface-50 dark:bg-surface-900 border-l border-surface-200 dark:border-surface-700" style="width: 800px;">
                 
                 <!-- <PdfViewer :contentHtml="mdStore.result.content" /> -->
                  <div v-html="renderContent"></div>
@@ -44,7 +44,7 @@
 
         </div>
     </div>
-        <div ref="previewRef" class="w-1/2 p-5 absolute z-0 top-0 left-0" style="visibility: hidden;">
+        <div ref="previewRef" class=" p-5 absolute z-0 top-0 left-0" style="visibility: hidden; width: 800px;">
             <SimpleTemplate :config="mdStore.result.data" :content="mdStore.result.content" />
         </div>
 </template>

@@ -23,43 +23,78 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
             .map(s => s + '\n')
     };
 
+    // 处理文本节点(p, div)的拆分
+    const splitTextNode = (textNode: Element) => {
+        const textContent = textNode.textContent || '';
+        const tagName = textNode.tagName.toLowerCase();
+        const splitTexts = splitTextForPagination(textContent);
+        const newElements = splitTexts.map(text => {
+            const newEl = document.createElement(tagName);
+            newEl.textContent = text;
+            return newEl;
+        });
+        return newElements;
+    }
+
     const sliceElement = (element: Element): Element[] => {
         const children = Array.from(element.children);
         let currentPageElement = createPage();
-        console.log(currentPageElement, 'currentPageElement')
+        console.log(currentPageElement.getBoundingClientRect().height, 'currentPageElement')
 
-        let resetPageHeight = 800;
-        let currentHeight = 0;
+        const PageSize = 760; // 每页的高度限制
+
+        let resetPageHeight = PageSize;
+        // let currentHeight = 0;
         // let currentItems: HTMLElement[] = [];
         const pages = [currentPageElement];
         while (children.length > 0) {
             const el = children.shift() as HTMLElement;
             const height = el.getBoundingClientRect().height;
-            // console.log(resetPageHeight, height, currentHeight, height > resetPageHeight);
-            if (height > resetPageHeight && height >= 400) {
+            console.log({
+                    rect: el.getBoundingClientRect(),
+                    offsetHeight: el.offsetHeight,
+                    scrollHeight: el.scrollHeight,
+                    clientHeight: el.clientHeight,
+                });
+            // if the element is taller than the page size, split it
+            if (height > PageSize) {
                 const subChildren = Array.from(el.children);
-                if (subChildren.length !== 0) {
+                if (subChildren.length > 0) {
+                    children.unshift(...subChildren);
+                } else if (el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'div') {
+                    children.unshift(...splitTextNode(el));
+                } else {
+                    pages.push(createPage([el.cloneNode(true)] as HTMLElement[])); // Create a new page for the oversized element
+                    resetPageHeight = PageSize;
+                    currentPageElement = createPage();
+                    pages.push(currentPageElement); // Push the new page to the pages array
+                }
+
+                continue; // Skip to the next element
+            }
+
+            console.log(el.tagName,"height", height, "resetPageHeight", resetPageHeight);
+            if (height > resetPageHeight && height > 50) {
+                const subChildren = Array.from(el.children);
+                if (subChildren.length > 0) {
                     children.unshift(...subChildren);
                 } else {
-                    currentPageElement = createPage([el.cloneNode(true)]); // Create a new page
-                    resetPageHeight = 800 - height; // Reset the height for the next page
-                    pages.push(currentPageElement);
+                    currentPageElement = createPage([el.cloneNode(true)] as HTMLElement[]); // Create a new page
+                    resetPageHeight = PageSize - height;
+                    pages.push(currentPageElement); // Push the new page to the pages array
                 }
-            }
-            else {
+            } else if (height > resetPageHeight && height <= 50) {
+                currentPageElement = createPage([el.cloneNode(true)] as HTMLElement[]); // Create a new page
+                resetPageHeight = PageSize - height;
+                pages.push(currentPageElement); // Push the new page to the pages array
+            } else {
                 currentPageElement.appendChild(el.cloneNode(true) as HTMLElement);
                 resetPageHeight -= height;
-
-                if (resetPageHeight <= 20) {
-                    resetPageHeight = 800; // Reset the height for the next page
-                    currentPageElement = createPage(); // Create a new page
-                    // If there are no more children, push the last page
-                    pages.push(currentPageElement);
-                }
             }
+            
         }
 
-        console.log("pages", pages);
+        // console.log("pages", pages);
 
         return pages;
     };
