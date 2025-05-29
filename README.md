@@ -1,5 +1,36 @@
-# Vue 3 + TypeScript + Vite
+# 🧾 md2cv - Markdown to PDF Resume Generator
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+简历生成工具
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## 🧰 技术栈
+
+- [Vue 3](https://vuejs.org/)
+- [PrimeVue](https://primevue.org/)
+- [Pinia](https://pinia.vuejs.org/)
+- [html2canvas](https://github.com/niklasvh/html2canvas)
+- [jsPDF](https://github.com/parallax/jsPDF)
+- [TailwindCSS](https://tailwindcss.com/)
+- [Markdown-it](https://github.com/markdown-it/markdown-it)
+
+---
+
+## 📦 安装与启动
+
+```bash
+# 克隆项目
+git clone https://github.com/your-username/md2cv.git
+cd md2cv
+
+# 安装依赖
+npm install
+
+# 启动开发服务器
+npm run dev
+```
+
+## todo list
+
+- [ ] 更多模板，模板切换
+- [ ] 样式配置
+- [ ] 本地保存
+- [ ] 接入大模型
