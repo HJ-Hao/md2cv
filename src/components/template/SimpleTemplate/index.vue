@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col">
-        <div class='flex flex-col items-center gap-2.5'>
+        <div class='flex flex-col items-center gap-2.5 mb-2.5'>
             <div class='text-4xl font-bold'>{{ config.name }}</div>
             <div class='flex items-center justify-center'>
                 <div class='text-gray-500 not-last:after:content-["|"] after:m-1.5'>
@@ -52,13 +52,3 @@ const config = computed(() => {
     return { ...defaultConfig, ...props.config }
 });
 </script>
-
-<style>
-
-/* .content-box :deep(h1) {
-    font-size: var(--text-2xl);
-    font-weight: bold;
-    border-bottom: 1px solid;
-} */
-
-</style>

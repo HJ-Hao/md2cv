@@ -36,15 +36,14 @@
         </div>
 
             <!-- 右侧预览区域 -->
-            <div class=" p-5 overflow-auto bg-surface-50 dark:bg-surface-900 border-l border-surface-200 dark:border-surface-700" style="width: 800px;">
+            <div ref="exportRef" class=" p-5 overflow-auto bg-surface-50 dark:bg-surface-900 border-l border-surface-200 dark:border-surface-700">
                 
-                <!-- <PdfViewer :contentHtml="mdStore.result.content" /> -->
                  <div v-html="renderContent"></div>
             </div>
 
         </div>
     </div>
-        <div ref="previewRef" class=" p-5 absolute z-0 top-0 left-0" style="visibility: hidden; width: 800px;">
+        <div ref="previewRef" class=" p-5 absolute z-0 top-0 left-0" style="visibility: hidden; width: 794px;">
             <SimpleTemplate :config="mdStore.result.data" :content="mdStore.result.content" />
         </div>
 </template>
@@ -60,6 +59,7 @@ import jsPDF from 'jspdf'
 
 
 const previewRef = ref<HTMLElement | null>(null);
+const exportRef = ref<HTMLElement | null>(null);
 const exporting = ref(false);
 // const render = ref<HTMLElement | null>(null);
 
@@ -75,28 +75,40 @@ const exportPDF = async () => {
 
     // 等待 DOM 更新 + 样式应用完成
     await nextTick()
-    const element = previewRef.value
+    const element = exportRef.value
     if (!element) {
         console.warn("Preview element not found.")
         exporting.value = false
         return
     }
 
-    try {
-        const canvas = await html2canvas(element, {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff', // 防止透明
-        })
+    const pages = element.querySelectorAll('.page');
+    if (pages.length === 0) {
+        console.warn("No pages found in the preview element.")
+        exporting.value = false
+        return
+    }
 
-        const imgData = canvas.toDataURL('image/png')
+    try {
         const pdf = new jsPDF('p', 'mm', 'a4')
 
-        const imgProps = pdf.getImageProperties(imgData)
-        const pdfWidth = pdf.internal.pageSize.getWidth()
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width
+        for (let i = 0; i < pages.length; i++) {
+            const el = pages[i] as HTMLElement
 
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
+            const canvas = await html2canvas(el, {
+                scale: 2, // 提高清晰度
+                useCORS: true
+            })
+            const imgData = canvas.toDataURL('image/png')
+
+            const imgProps = pdf.getImageProperties(imgData)
+            const pdfWidth = pdf.internal.pageSize.getWidth()
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width
+
+            if (i !== 0) pdf.addPage()
+            pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
+        }
+
         pdf.save('md2cv-resume.pdf')
     } catch (error) {
         console.error("Error exporting PDF:", error)

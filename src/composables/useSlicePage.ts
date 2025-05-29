@@ -41,7 +41,7 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
         let currentPageElement = createPage();
         console.log(currentPageElement.getBoundingClientRect().height, 'currentPageElement')
 
-        const PageSize = 760; // 每页的高度限制
+        const PageSize = 1123; // A4 page height in pixels (approximate)
 
         let resetPageHeight = PageSize;
         // let currentHeight = 0;
