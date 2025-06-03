@@ -5,6 +5,8 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
 
     const renderContent = computed(() => pages.value?.map((page) => page.outerHTML).join('') || '');
 
+    const pageSize = computed(() => pages.value?.length || 1);
+
     const createPage = (children: HTMLElement[] = []) => {
         const page = document.createElement("div");
         page.className = "page content-box";
@@ -115,6 +117,7 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
     return {
         getSlicePage,
         pages,
+        pageSize,
         renderContent
     }
 };

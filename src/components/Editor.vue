@@ -1,52 +1,75 @@
 <template>
-    <div class="min-h-screen flex flex-col">
-        <!-- 顶部栏 -->
-        <Toolbar class="surface-0 shadow-2">
-            <template #start>
-                <span class="text-xl font-bold ml-2">md2cv</span>
-            </template>
-            <template #end>
-                <Button icon="pi pi-sun" @click="handleChangeDarkMode" class="mr-2" />
-            </template>
-        </Toolbar>
-
-        <!-- 主体区域 -->
-        <div class="flex flex-1 overflow-hidden">
-        <!-- 左侧工具栏 -->
-        <div class="w-48 bg-surface-100 dark:bg-surface-800 p-4 flex flex-col gap-3">
-            <!-- <FileUpload
-            mode="basic"
-            chooseLabel="上传图片"
-            accept="image/*"
-            customUpload
-            @uploader="() => {}"
-            /> -->
-             <Button label="导出 PDF" icon="pi pi-file-pdf" :loading="exporting" @click="exportPDF" />
+  <div class="h-screen flex flex-col bg-surface-0 dark:bg-surface-900 text-surface-900 dark:text-surface-50">
+    <!-- 顶部栏 -->
+    <Toolbar class="shadow-md px-4 bg-surface-100 dark:bg-surface-800">
+      <template #start>
+        <span class="text-xl font-bold tracking-wide">✨ md2cv</span>
+      </template>
+      <template #end>
+        <div class="flex items-center gap-2">
+          <Button
+            icon="pi pi-sun"
+            severity="secondary"
+            rounded
+            text
+            @click="handleChangeDarkMode"
+          />
         </div>
+      </template>
+    </Toolbar>
 
-        <!-- 中间 Markdown 编辑器 -->
-        <div class="flex-1 p-4 overflow-auto">
-            <Textarea
-                v-model="mdStore.input"
-                autoResize
-                rows="30"
-                class="w-full h-full"
-                placeholder="请输入 Markdown..."
-            />
+    <!-- 主体区域 -->
+    <div class="flex flex-1 overflow-hidden">
+      <!-- 左侧工具栏 -->
+      <aside class="w-60 p-4 bg-surface-100 dark:bg-surface-800 border-r border-surface-300 dark:border-surface-700 flex flex-col gap-4">
+        <h3 class="text-lg font-medium">工具栏</h3>
+        <Button
+          label="导出 PDF"
+          icon="pi pi-file-pdf"
+          severity="danger"
+          :loading="exporting"
+          class="w-full"
+          @click="exportPDF"
+        />
+        <!-- 更多功能 -->
+      </aside>
+
+      <!-- 中间 Markdown 输入 -->
+      <main class="flex-1">
+        <div class="h-full bg-surface-50 dark:bg-surface-800 rounded-xl shadow-inner p-4">
+          <Textarea
+            ref="editorRef"
+            v-model="mdStore.input"
+            class="w-full h-full text-sm"
+            placeholder="请输入 Markdown..."
+            @scroll="syncScroll"
+          />
         </div>
+      </main>
 
-            <!-- 右侧预览区域 -->
-            <div ref="exportRef" class=" p-5 overflow-auto bg-surface-50 dark:bg-surface-900 border-l border-surface-200 dark:border-surface-700">
-                
-                 <div v-html="renderContent"></div>
-            </div>
-
+      <!-- 右侧预览区域 -->
+      <div
+          class="bg-white dark:bg-surface-800 p-6 rounded-lg shadow-md overflow-auto"
+          ref="exportRef"
+        >
+          <div v-html="renderContent" />
         </div>
     </div>
-        <div ref="previewRef" class=" p-5 absolute z-0 top-0 left-0" style="visibility: hidden; width: 794px;">
-            <SimpleTemplate :config="mdStore.result.data" :content="mdStore.result.content" />
-        </div>
+
+    <!-- 隐藏的预览区域（用于导出） -->
+    <div
+      ref="previewRef"
+      class="absolute top-0 left-0 -z-10 opacity-0 pointer-events-none"
+      style="width: 794px;"
+    >
+      <SimpleTemplate
+        :config="mdStore.result.data"
+        :content="mdStore.result.content"
+      />
+    </div>
+  </div>
 </template>
+
 
 <script setup lang="ts">
 import { ref, nextTick, watch, onMounted } from 'vue'
@@ -60,8 +83,23 @@ import jsPDF from 'jspdf'
 
 const previewRef = ref<HTMLElement | null>(null);
 const exportRef = ref<HTMLElement | null>(null);
+const editorRef = ref<any>(null);
 const exporting = ref(false);
-// const render = ref<HTMLElement | null>(null);
+
+
+const syncScroll = () => {
+  const editor = editorRef.value?.$el as HTMLElement | null;
+
+  const preview = previewRef.value;
+
+  if (!editor || !preview || !exportRef.value) return;
+
+  const editorScrollRatio =
+    editor.scrollTop / (editor.scrollHeight - editor.clientHeight);
+
+  exportRef.value.scrollTop = preview.clientHeight * editorScrollRatio;
+};
+
 
 const mdStore = useMarkdownStore();
 
