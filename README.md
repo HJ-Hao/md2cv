@@ -1,6 +1,6 @@
 # 🧾 md2cv - Markdown to PDF Resume Generator
 
-简历生成工具
+简历生成工具 [demo](https://hj-hao.github.io/md2cv/)
 
 ## 🧰 技术栈
 
