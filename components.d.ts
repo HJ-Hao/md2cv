@@ -9,6 +9,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     Button: typeof import('primevue/button')['default']
+    CardTemplate: typeof import('./src/components/templates/CardTemplate/index.vue')['default']
+    Dropdown: typeof import('primevue/dropdown')['default']
     Edit: typeof import('./src/components/Edit.vue')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']
     FileUpload: typeof import('primevue/fileupload')['default']
@@ -17,7 +19,7 @@ declare module 'vue' {
     InputText: typeof import('primevue/inputtext')['default']
     Message: typeof import('primevue/message')['default']
     PdfViewer: typeof import('./src/components/PdfViewer.vue')['default']
-    SimpleTemplate: typeof import('./src/components/template/SimpleTemplate/index.vue')['default']
+    SimpleTemplate: typeof import('./src/components/templates/SimpleTemplate/index.vue')['default']
     Textarea: typeof import('primevue/textarea')['default']
     Toolbar: typeof import('primevue/toolbar')['default']
   }

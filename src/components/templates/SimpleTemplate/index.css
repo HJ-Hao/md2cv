@@ -1,0 +1,7 @@
+.content-box {
+    h1 {
+        font-size: var(--text-2xl);
+        font-weight: bold;
+        border-bottom: 1px solid;
+    }
+}
