@@ -1,6 +1,8 @@
 import { computed, type Ref, ref } from "vue";
+import { useTemplateStore } from '@/store/template';
 
 export const useSlicePage = (target: Ref<HTMLElement | null>) => {
+    const templateStore = useTemplateStore();
     const pages = ref<Element[]>();
 
     const renderContent = computed(() => pages.value?.map((page) => page.outerHTML).join('') || '');
@@ -9,7 +11,7 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
 
     const createPage = (children: HTMLElement[] = []) => {
         const page = document.createElement("div");
-        page.className = "page content-box";
+        page.className = `page ${templateStore.currentConfig.className || ''}`;
         children.forEach((item) => {
             page.appendChild(item);
         });

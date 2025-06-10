@@ -17,7 +17,7 @@
                 </div>
             </div>
         </div>
-        <div class="content-box" v-html="content"></div>
+        <div class="simple-template-content-box" v-html="content"></div>
     </div>
 </template>
 
