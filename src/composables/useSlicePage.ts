@@ -18,27 +18,27 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
         return page;
     };
 
-    const splitTextForPagination = (text: string) => {
-        // 可以按句号、换行符或其他规则拆分
-        return text
-            .split(/(?<=[。；；.!?？])/g) // 拆分中英文标点
-            .map(s => s.trim())
-            .filter(Boolean)
-            .map(s => s + '\n')
-    };
+    // const splitTextForPagination = (text: string) => {
+    //     // 可以按句号、换行符或其他规则拆分
+    //     return text
+    //         .split(/(?<=[。；；.!?？])/g) // 拆分中英文标点
+    //         .map(s => s.trim())
+    //         .filter(Boolean)
+    //         .map(s => s + '\n')
+    // };
 
-    // 处理文本节点(p, div)的拆分
-    const splitTextNode = (textNode: Element) => {
-        const textContent = textNode.textContent || '';
-        const tagName = textNode.tagName.toLowerCase();
-        const splitTexts = splitTextForPagination(textContent);
-        const newElements = splitTexts.map(text => {
-            const newEl = document.createElement(tagName);
-            newEl.textContent = text;
-            return newEl;
-        });
-        return newElements;
-    }
+    // // 处理文本节点(p, div)的拆分
+    // const splitTextNode = (textNode: Element) => {
+    //     const textContent = textNode.textContent || '';
+    //     const tagName = textNode.tagName.toLowerCase();
+    //     const splitTexts = splitTextForPagination(textContent);
+    //     const newElements = splitTexts.map(text => {
+    //         const newEl = document.createElement(tagName);
+    //         newEl.textContent = text;
+    //         return newEl;
+    //     });
+    //     return newElements;
+    // }
 
     const sliceElement = (element: Element): Element[] => {
         const children = Array.from(element.children);
