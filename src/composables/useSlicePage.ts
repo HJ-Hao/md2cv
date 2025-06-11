@@ -65,9 +65,11 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
                 const subChildren = Array.from(el.children);
                 if (subChildren.length > 0) {
                     children.unshift(...subChildren);
-                } else if (el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'div') {
-                    children.unshift(...splitTextNode(el));
-                } else {
+                } 
+                // else if (el.tagName.toLowerCase() === 'p' || el.tagName.toLowerCase() === 'div') {
+                //     children.unshift(...splitTextNode(el));
+                // } 
+                else {
                     pages.push(createPage([el.cloneNode(true)] as HTMLElement[])); // Create a new page for the oversized element
                     resetPageHeight = PageSize;
                     currentPageElement = createPage();

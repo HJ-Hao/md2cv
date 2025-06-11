@@ -19,10 +19,6 @@ const templateLoaderPlugin = {
       "../components/templates/**/index.ts",
       { eager: true }
     );
-    const styleModules = import.meta.glob(
-      "../components/templates/**/index.{css,scss}",
-      { query: "?url", import: "default" }
-    );
 
     const templates: Record<string, TemplateMeta> = {};
 
@@ -58,21 +54,28 @@ const templateLoaderPlugin = {
       }
     }
 
-    for (const path in styleModules) {
-      // eg: ../components/templates/simple/index.css => simple
-      const name = getTemplateName(path);
-      if (name) {
-        (styleModules as any)[path]().then((href: string) => {
-          const link = document.createElement("link");
-          link.rel = "stylesheet";
-          link.href = href;
-          document.head.appendChild(link);
-        });
-      }
-    }
-
     app.provide(TemplateProvideKey, templates);
   },
+};
+
+export const loadTemplateStyles = () => {
+    const styleModules = import.meta.glob(
+        "../components/templates/**/index.{css,scss}",
+        { query: "?url", import: "default" }
+    ) as Record<string, () => Promise<string>>;
+
+    return new Promise<void>((resolve) => {
+        Promise.all(Object.values(styleModules).map((module) => module()))
+            .then((hrefs) => {
+                hrefs.forEach((href) => {
+                    const link = document.createElement("link");
+                    link.rel = "stylesheet";
+                    link.href = href;
+                    document.head.appendChild(link);
+                });
+                resolve();
+            })
+    });
 };
 
 export default templateLoaderPlugin;
