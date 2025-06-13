@@ -12,6 +12,8 @@ declare module 'vue' {
     CardTemplate: typeof import('./src/components/templates/CardTemplate/index.vue')['default']
     Dropdown: typeof import('primevue/dropdown')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']
+    FileUpload: typeof import('primevue/fileupload')['default']
+    Sidebar: typeof import('./src/components/Sidebar.vue')['default']
     SimpleTemplate: typeof import('./src/components/templates/SimpleTemplate/index.vue')['default']
     Textarea: typeof import('primevue/textarea')['default']
     Toolbar: typeof import('primevue/toolbar')['default']

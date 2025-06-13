@@ -2,6 +2,48 @@
     h1 {
         font-size: var(--text-2xl);
         font-weight: bold;
-        border-bottom: 1px solid;
+        border-bottom: 2px solid var(--color-zinc-800);
+    }
+
+    h2 {
+        font-size: var(--text-xl);
+        border-bottom: 2px solid var(--color-zinc-800);
+    }
+
+    h3 {
+        font-size: var(--text-lg);
+        color: var(--color-zinc-500);
+    }
+
+    /* 段落和列表样式 */
+    p {
+        margin: 0.5em 0;
+    }
+
+    ul {
+        list-style-type: disc;
+    }
+
+    ol {
+        list-style-type: decimal;
+    }
+
+    ul, ol {
+        padding-left: 1.5em;
+        margin: 0.5em 0;
+    }
+
+    li {
+        margin: 0.25em 0;
+    }
+
+
+    /* 强调 */
+    strong {
+        font-weight: bold;
+    }
+
+    em {
+        font-style: italic;
     }
 }

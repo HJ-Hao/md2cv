@@ -30,10 +30,9 @@ body {
     border: 1px solid var(--surface-border);
 }
 
-.content-box {
-    h1 {
-        font-size: var(--text-2xl);
-        font-weight: bold;
-        border-bottom: 1px solid;
-    }
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
 }

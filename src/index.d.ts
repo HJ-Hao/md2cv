@@ -1,3 +1,3 @@
-declare namespace html2pdf.js {
-      html2pdf: any;
+declare module 'markdown-it-container' {
+    export default function (md: any, name: string, options?: any): void
 }

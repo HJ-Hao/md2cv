@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import Editor from './components/Editor.vue'
+import Editor from './pages/Editor.vue'
 </script>
 
 <template>
-  <main>
-    <Editor />
-  </main>
+    <main>
+        <Editor />
+    </main>
 </template>
 
 <style scoped></style>
