@@ -67,13 +67,22 @@ export const loadTemplateStyles = () => {
     return new Promise<void>((resolve) => {
         Promise.all(Object.values(styleModules).map((module) => module())).then(
             (hrefs) => {
-                hrefs.forEach((href) => {
-                    const link = document.createElement('link')
-                    link.rel = 'stylesheet'
-                    link.href = href
-                    document.head.appendChild(link)
+                const loadPromises = hrefs.map((href) => {
+                    return new Promise<void>((res) => {
+                        const link = document.createElement('link')
+                        link.rel = 'stylesheet'
+                        link.href = href
+                        link.onload = () => res()
+                        link.onerror = () => {
+                            console.warn('样式加载失败:', href)
+                            res()
+                        }
+                        document.head.appendChild(link)
+                    })
                 })
-                resolve()
+
+                // 确保所有 link 都加载完成后再 resolve
+                Promise.all(loadPromises).then(() => resolve())
             }
         )
     })

@@ -26,7 +26,7 @@
     <!-- 隐藏的区域用于渲染分页 -->
     <div
         ref="renderRef"
-        class="absolute top-0 left-0 -z-10 opacity-0 pointer-events-none w-[794px]"
+        class="absolute top-0 left-0 -z-10 invisible pointer-events-none w-[794px]"
     >
         <component
             :is="currentComponent"

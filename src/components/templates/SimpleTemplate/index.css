@@ -3,11 +3,11 @@
         font-size: var(--text-2xl);
         font-weight: bold;
         border-bottom: 2px solid var(--color-zinc-800);
+        margin-bottom: 0.1em;
     }
 
     h2 {
         font-size: var(--text-xl);
-        border-bottom: 2px solid var(--color-zinc-800);
     }
 
     h3 {
@@ -29,6 +29,7 @@
     }
 
     ul, ol {
+        list-style-position: inside;
         padding-left: 1.5em;
         margin: 0.5em 0;
     }
