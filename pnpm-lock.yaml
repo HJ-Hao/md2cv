@@ -53,6 +53,9 @@ importers:
       vue:
         specifier: ^3.5.13
         version: 3.5.14(typescript@5.8.3)
+      vue-to-print:
+        specifier: ^1.4.0
+        version: 1.4.0(vue@3.5.14(typescript@5.8.3))
     devDependencies:
       '@primevue/auto-import-resolver':
         specifier: ^4.3.4
@@ -2175,6 +2178,11 @@ packages:
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
     peerDependencies:
       eslint: ^8.57.0 || ^9.0.0
+
+  vue-to-print@1.4.0:
+    resolution: {integrity: sha512-HNq9BAvB7gTT3eQQasdvVfcsQzBcH/bfokFKToM8ABjZ35+brdKZXda5UCCB+9uiuKP8YEGfMzav8YeD3MtUPg==}
+    peerDependencies:
+      vue: ^3.0.0
 
   vue-tsc@2.2.10:
     resolution: {integrity: sha512-jWZ1xSaNbabEV3whpIDMbjVSVawjAyW+x1n3JeGQo7S0uv2n9F/JMgWW90tGWNFRKya4YwKMZgCtr0vRAM7DeQ==}
@@ -4352,6 +4360,10 @@ snapshots:
       semver: 7.7.2
     transitivePeerDependencies:
       - supports-color
+
+  vue-to-print@1.4.0(vue@3.5.14(typescript@5.8.3)):
+    dependencies:
+      vue: 3.5.14(typescript@5.8.3)
 
   vue-tsc@2.2.10(typescript@5.8.3):
     dependencies:

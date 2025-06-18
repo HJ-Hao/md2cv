@@ -1,10 +1,8 @@
 <template>
-    <!-- 左侧工具栏 -->
     <aside
         class="w-60 p-4 bg-surface-100 dark:bg-surface-800 border-r border-surface-300 dark:border-surface-700 flex flex-col gap-4"
     >
         <h3 class="text-lg font-medium">工具栏</h3>
-        <!-- 模板选择器 -->
         <div>
             <label class="block mb-2 text-sm font-medium">选择模板</label>
             <Dropdown
@@ -30,8 +28,6 @@
             class="w-full"
             @click="onExportPdf"
         />
-        <!-- 更多功能 -->
-        <!-- 导出 Markdown -->
         <Button
             label="导出 Markdown"
             icon="pi pi-download"
@@ -60,7 +56,6 @@ const handleMarkdownUpload = (event: any) => {
 
     const reader = new FileReader()
     reader.onload = (e) => {
-        console.log(e, 'e')
         const content = e.target?.result as string
         input.value = content
     }

@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tailwindcss-primeui";
+@import 'tailwindcss';
+@import 'tailwindcss-primeui';
 @import 'primeicons/primeicons.css';
 
 @custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
@@ -13,7 +13,7 @@ body {
     height: 1123px;
     margin: 16px auto;
     padding: 48px;
-    
+
     box-sizing: content-box;
 
     overflow: hidden;
@@ -28,11 +28,34 @@ body {
 
     /* 分页边框可选 */
     border: 1px solid var(--surface-border);
+
+    * {
+        margin-top: 0;
+    }
 }
 
 .row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+}
+
+.render-area {
+    width: 794px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: -10;
+}
+
+@media print {
+    .page {
+        zoom: 0.9; /* 缩小整体页面内容 */
+        padding: 48px;
+        margin: 0;
+        break-before: page;
+        box-shadow: none;
+        border: none;
+    }
 }

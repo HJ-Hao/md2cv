@@ -1,33 +1,60 @@
 <template>
-    <!-- 中间 Markdown 输入 -->
     <main class="flex-1">
         <div
-            class="h-full bg-surface-50 dark:bg-surface-800 rounded-xl shadow-inner p-4"
+            class="h-full bg-surface-50 dark:bg-surface-800 rounded-xl shadow-inner p-4 flex flex-col gap-2"
         >
+            <!-- 工具栏（Icon + Tooltip）-->
+            <div
+                class="flex flex-wrap gap-2 border-b border-surface-300 dark:border-surface-700"
+            >
+                <Button
+                    label="H1"
+                    size="small"
+                    text
+                    aria-label="H1"
+                    tooltip="H1"
+                    @click="insert(EditorInsertType.HEADING)"
+                />
+                <Button
+                    icon="pi pi-list"
+                    size="small"
+                    text
+                    aria-label="LIST"
+                    tooltip="LIST"
+                    @click="insert(EditorInsertType.LIST)"
+                />
+                <Button
+                    icon="pi pi-bars"
+                    size="small"
+                    text
+                    aria-label=""
+                    tooltip=""
+                    @click="insert(EditorInsertType.LAYOUT)"
+                />
+            </div>
+
+            <!-- 编辑器输入框 -->
             <Textarea
                 ref="editorRef"
                 v-model="input"
-                class="w-full h-full text-sm"
+                class="w-full h-full text-sm resize-none bg-transparent border-none focus:ring-0 focus:outline-none"
                 placeholder="请输入 Markdown..."
                 @scroll="handleEditorScroll"
             />
         </div>
     </main>
 
-    <!-- 右侧预览区域 -->
+    <!-- preview box -->
     <div
-        class="bg-white dark:bg-surface-800 p-6 rounded-lg shadow-md overflow-auto"
+        class="bg-white dark:bg-surface-800 rounded-lg shadow-md overflow-auto"
         ref="previewRef"
         @scroll="handlePreviewScroll"
     >
         <div v-html="renderContent" />
     </div>
 
-    <!-- 隐藏的区域用于渲染分页 -->
-    <div
-        ref="renderRef"
-        class="absolute top-0 left-0 -z-10 invisible pointer-events-none w-[794px]"
-    >
+    <!-- hidden box to slice page -->
+    <div ref="renderRef" class="render-area">
         <component
             :is="currentComponent"
             :config="result.data"
@@ -42,8 +69,13 @@ import { storeToRefs } from 'pinia'
 import { useMarkdownStore } from '@/store/markdown'
 import { useTemplateStore } from '@/store/template'
 import { useSlicePage } from '@/composables/useSlicePage'
+import {
+    useEditorInsert,
+    EditorInsertType,
+} from '@/composables/useEditorInsert'
 import html2canvas from 'html2canvas-pro'
 import jsPDF from 'jspdf'
+import { useVueToPrint } from 'vue-to-print'
 
 const renderRef = ref<HTMLElement | null>(null)
 const previewRef = ref<HTMLElement | null>(null)
@@ -55,7 +87,13 @@ const templateStore = useTemplateStore()
 const { result, input } = storeToRefs(mdStore)
 const { currentTemplate, currentComponent } = storeToRefs(templateStore)
 
+const { insert } = useEditorInsert(editorRef, input)
 const { getSlicePage, renderContent } = useSlicePage(renderRef)
+
+const { handlePrint } = useVueToPrint({
+    content: previewRef as any,
+    documentTitle: 'AwesomeFileName',
+})
 
 // syncing scroll positions between editor and preview
 // add flags to prevent infinite loops
@@ -112,8 +150,11 @@ const handlePreviewScroll = () => {
     })
 }
 
+// export pdf use canvas(no use)
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const exportPDF = async () => {
-    // 等待 DOM 更新 + 样式应用完成
     await nextTick()
     const element = previewRef.value
     if (!element) {
@@ -133,7 +174,7 @@ const exportPDF = async () => {
         const el = pages[i] as HTMLElement
 
         const canvas = await html2canvas(el, {
-            scale: 2, // 提高清晰度
+            scale: 2,
             useCORS: true,
         })
         const imgData = canvas.toDataURL('image/png')
@@ -165,6 +206,8 @@ onMounted(() => {
 })
 
 defineExpose({
-    exportPDF,
+    exportPDF: () => {
+        handlePrint()
+    },
 })
 </script>
