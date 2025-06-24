@@ -1,10 +1,19 @@
 <script setup lang="ts">
-import Editor from './pages/Editor.vue'
+import { onMounted } from 'vue'
+import ResumeDetail from './pages/ResumeDetail.vue'
+import { useImageStorage } from '@/composables/useImageStorage'
+
+const { loadImage } = useImageStorage()
+
+onMounted(async () => {
+    // load indexDB image data
+    await loadImage()
+})
 </script>
 
 <template>
     <main>
-        <Editor />
+        <ResumeDetail />
     </main>
 </template>
 

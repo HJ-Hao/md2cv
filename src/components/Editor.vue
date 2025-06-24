@@ -50,7 +50,15 @@
         ref="previewRef"
         @scroll="handlePreviewScroll"
     >
-        <div v-html="renderContent" />
+        <component
+            v-for="(content, index) in renderList"
+            :key="index"
+            :is="currentComponent"
+            :config="result.data"
+            :content="content"
+            :page="index + 1"
+        />
+        <!-- <div v-html="renderContent" /> -->
     </div>
 
     <!-- hidden box to slice page -->
@@ -73,8 +81,6 @@ import {
     useEditorInsert,
     EditorInsertType,
 } from '@/composables/useEditorInsert'
-import html2canvas from 'html2canvas-pro'
-import jsPDF from 'jspdf'
 import { useVueToPrint } from 'vue-to-print'
 
 const renderRef = ref<HTMLElement | null>(null)
@@ -88,7 +94,7 @@ const { result, input } = storeToRefs(mdStore)
 const { currentTemplate, currentComponent } = storeToRefs(templateStore)
 
 const { insert } = useEditorInsert(editorRef, input)
-const { getSlicePage, renderContent } = useSlicePage(renderRef)
+const { getSlicePage, renderList } = useSlicePage(renderRef)
 
 const { handlePrint } = useVueToPrint({
     content: previewRef as any,
@@ -148,46 +154,6 @@ const handlePreviewScroll = () => {
     requestAnimationFrame(() => {
         isSyncingFromPreview = false
     })
-}
-
-// export pdf use canvas(no use)
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const exportPDF = async () => {
-    await nextTick()
-    const element = previewRef.value
-    if (!element) {
-        console.warn('Preview element not found.')
-        return
-    }
-
-    const pages = element.querySelectorAll('.page')
-    if (pages.length === 0) {
-        console.warn('No pages found in the preview element.')
-        return
-    }
-
-    const pdf = new jsPDF('p', 'mm', 'a4')
-
-    for (let i = 0; i < pages.length; i++) {
-        const el = pages[i] as HTMLElement
-
-        const canvas = await html2canvas(el, {
-            scale: 2,
-            useCORS: true,
-        })
-        const imgData = canvas.toDataURL('image/png')
-
-        const imgProps = pdf.getImageProperties(imgData)
-        const pdfWidth = pdf.internal.pageSize.getWidth()
-        const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width
-
-        if (i !== 0) pdf.addPage()
-        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight)
-    }
-
-    pdf.save('md2cv-resume.pdf')
 }
 
 watch(

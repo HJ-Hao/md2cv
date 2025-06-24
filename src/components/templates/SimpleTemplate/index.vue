@@ -1,32 +1,40 @@
 <template>
-    <div class="flex flex-col">
-        <div class="flex flex-col items-center gap-2.5 mb-2.5">
-            <div class="text-4xl font-bold">{{ config.name }}</div>
-            <div class="flex items-center justify-center">
-                <div
-                    class="text-gray-500 not-last:after:content-['|'] after:m-1.5"
-                >
-                    <span>Blog:</span>
-                    <a
-                        href="{config.blog}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >{{ config.blog }}</a
+    <div class="page flex flex-col">
+        <div
+            class="flex relative gap-2.5 mb-2.5 items-center"
+            v-if="page === 1"
+        >
+            <div class="flex flex-col flex-1 gap-5">
+                <div class="text-4xl font-bold">
+                    {{ config.name }}
+                </div>
+                <div class="flex items-center">
+                    <div
+                        class="text-gray-500 not-last:after:content-['|'] after:m-1.5"
                     >
-                </div>
-                <div
-                    class="text-gray-500 not-last:after:content-['|'] after:m-1.5"
-                >
-                    <span>Phone:</span>
-                    {{ config.phone }}
-                </div>
-                <div
-                    class="text-gray-500 not-last:after:content-['|'] after:m-1.5"
-                >
-                    <span>Location:</span>
-                    {{ config.location }}
+                        <span>Blog:</span>
+                        <a
+                            href="{config.blog}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >{{ config.blog }}</a
+                        >
+                    </div>
+                    <div
+                        class="text-gray-500 not-last:after:content-['|'] after:m-1.5"
+                    >
+                        <span>Phone:</span>
+                        {{ config.phone }}
+                    </div>
+                    <div
+                        class="text-gray-500 not-last:after:content-['|'] after:m-1.5"
+                    >
+                        <span>Location:</span>
+                        {{ config.location }}
+                    </div>
                 </div>
             </div>
+            <ResumeAvatar />
         </div>
         <div class="simple-template-content-box" v-html="content"></div>
     </div>
@@ -34,6 +42,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import ResumeAvatar from '@/components/ResumeAvatar.vue'
 
 type CustomConfig = {
     name: string
@@ -57,6 +66,10 @@ const props = defineProps({
     content: {
         type: String,
         default: '',
+    },
+    page: {
+        type: Number,
+        default: 1,
     },
 })
 

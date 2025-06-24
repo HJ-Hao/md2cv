@@ -16,6 +16,8 @@ body {
 
     box-sizing: content-box;
 
+    position: relative;
+
     overflow: hidden;
 
     /* 背景适配亮暗模式 */
@@ -28,16 +30,12 @@ body {
 
     /* 分页边框可选 */
     border: 1px solid var(--surface-border);
-
-    * {
-        margin-top: 0;
-    }
 }
 
 .row {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     gap: 2rem;
 }
 
@@ -57,5 +55,9 @@ body {
         break-before: page;
         box-shadow: none;
         border: none;
+    }
+
+    .resume-avater-placeholder {
+        display: none;
     }
 }

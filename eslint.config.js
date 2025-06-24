@@ -21,7 +21,7 @@ export default defineConfig([
     {
         rules: {
             '@typescript-eslint/no-explicit-any': 'warn',
-            'vue/multi-word-component-names': 'warn',
+            'vue/multi-word-component-names': 'off',
         },
     },
 ])

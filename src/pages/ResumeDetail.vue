@@ -10,13 +10,13 @@
             </template>
             <template #end>
                 <div class="flex items-center gap-2">
-                    <Button
+                    <!-- <Button
                         icon="pi pi-sun"
                         severity="secondary"
                         rounded
                         text
                         @click="handleChangeDarkMode"
-                    />
+                    /> -->
                     <Button
                         icon="pi pi-github"
                         severity="secondary"
@@ -53,9 +53,9 @@ const handleExportPDF = async () => {
     }
 }
 
-const handleChangeDarkMode = () => {
-    document.documentElement.classList.toggle('my-app-dark')
-}
+// const handleChangeDarkMode = () => {
+//     document.documentElement.classList.toggle('my-app-dark')
+// }
 
 const handleLinkToGitHub = () => {
     window.open('https://github.com/HJ-Hao/md2cv', '_blank')

@@ -1,42 +1,45 @@
 import { computed, type Ref, ref } from 'vue'
 import { useTemplateStore } from '@/store/template'
+import { A4_PAGE_SIZE } from '@/constants'
 
 export const useSlicePage = (target: Ref<HTMLElement | null>) => {
     const templateStore = useTemplateStore()
     const pages = ref<Element[]>()
 
-    const renderContent = computed(
-        () => pages.value?.map((page) => page.outerHTML).join('') || ''
-    )
+    const renderList = computed(() => {
+        return pages.value?.map((el) => el.innerHTML)
+    })
 
     const pageSize = computed(() => pages.value?.length || 1)
 
+    const PADDING = 48
+
+    const getCurrentPageHeight = (page: number) => {
+        if (templateStore.currentConfig.getCurrentPageHeight) {
+            return (
+                templateStore.currentConfig.getCurrentPageHeight(page) -
+                PADDING * 2
+            )
+        }
+        return A4_PAGE_SIZE - PADDING * 2
+    }
+
     const createPage = (children: HTMLElement[] = []) => {
         const page = document.createElement('div')
-        page.className = `page print-area ${templateStore.currentConfig.className || ''}`
         children.forEach((item) => {
             page.appendChild(item)
         })
         return page
     }
 
-    // const getElementFullHeight = (el: HTMLElement): number => {
-    //     const rect = el.getBoundingClientRect()
-    //     const style = window.getComputedStyle(el)
-
-    //     const marginTop = parseFloat(style.marginTop || '0')
-    //     const marginBottom = parseFloat(style.marginBottom || '0')
-
-    //     return rect.height + marginTop + marginBottom
-    // }
-
     const sliceElement = (element: Element): Element[] => {
         const children = Array.from(element.children)
+        let currentPage = 1
         let currentPageElement = createPage()
 
-        const PageSize = 1027 // A4 page height in pixels (approximate) 1123 - 48 * 2 (header and footer)
+        let PageSize = getCurrentPageHeight(currentPage) // A4 page height in pixels (approximate) 1123 - 48 * 2 (header and footer)
 
-        let resetPageHeight = PageSize
+        let resetPageHeight = PageSize // A4 page height in pixels (approximate) 1123 - 48 * 2 (header and footer)
         const pages = [currentPageElement]
         while (children.length > 0) {
             const el = children.shift() as HTMLElement
@@ -52,6 +55,8 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
                     pages.push(
                         createPage([el.cloneNode(true)] as HTMLElement[])
                     ) // Create a new page for the oversized element
+                    currentPage += 1
+                    PageSize = getCurrentPageHeight(currentPage)
                     resetPageHeight = PageSize
                     currentPageElement = createPage()
                     pages.push(currentPageElement) // Push the new page to the pages array
@@ -68,6 +73,8 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
                     currentPageElement = createPage([
                         el.cloneNode(true),
                     ] as HTMLElement[]) // Create a new page
+                    currentPage += 1
+                    PageSize = getCurrentPageHeight(currentPage)
                     resetPageHeight = PageSize - height
                     pages.push(currentPageElement) // Push the new page to the pages array
                 }
@@ -75,6 +82,8 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
                 currentPageElement = createPage([
                     el.cloneNode(true),
                 ] as HTMLElement[]) // Create a new page
+                currentPage += 1
+                PageSize = getCurrentPageHeight(currentPage)
                 resetPageHeight = PageSize - height
                 pages.push(currentPageElement) // Push the new page to the pages array
             } else {
@@ -89,7 +98,10 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
     }
 
     const getSlicePage = () => {
-        const targetElement = target.value
+        // select content element
+        const targetElement = target.value?.querySelector(
+            `.${templateStore.currentConfig.className}`
+        )
         const newPages = sliceElement(targetElement!)
         pages.value = newPages
     }
@@ -98,6 +110,6 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
         getSlicePage,
         pages,
         pageSize,
-        renderContent,
+        renderList,
     }
 }

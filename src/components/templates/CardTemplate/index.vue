@@ -1,35 +1,37 @@
 <template>
-    <div class="flex flex-col">
-        <div class="flex flex-col items-center gap-2.5 mb-2.5">
-            <div class="text-4xl font-bold">
-                {{ config.name }} card template
-            </div>
-            <div class="flex items-center justify-center">
-                <div
-                    class="text-gray-500 not-last:after:content-[&quot;|&quot;] after:m-1.5"
-                >
-                    <span>Blog:</span>
-                    <a
-                        href="{config.blog}"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        >{{ config.blog }}</a
+    <div class="page flex flex-col">
+        <template v-if="page === 1">
+            <div class="flex flex-col items-center gap-2.5 mb-2.5">
+                <div class="text-4xl font-bold">
+                    {{ config.name }}
+                </div>
+                <div class="flex items-center justify-center">
+                    <div
+                        class="text-gray-500 not-last:after:content-[&quot;|&quot;] after:m-1.5"
                     >
-                </div>
-                <div
-                    class="text-gray-500 not-last:after:content-[&quot;|&quot;] after:m-1.5"
-                >
-                    <span>Phone:</span>
-                    {{ config.phone }}
-                </div>
-                <div
-                    class="text-gray-500 not-last:after:content-[&quot;|&quot;] after:m-1.5"
-                >
-                    <span>Location:</span>
-                    {{ config.location }}
+                        <span>Blog:</span>
+                        <a
+                            href="{config.blog}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            >{{ config.blog }}</a
+                        >
+                    </div>
+                    <div
+                        class="text-gray-500 not-last:after:content-[&quot;|&quot;] after:m-1.5"
+                    >
+                        <span>Phone:</span>
+                        {{ config.phone }}
+                    </div>
+                    <div
+                        class="text-gray-500 not-last:after:content-[&quot;|&quot;] after:m-1.5"
+                    >
+                        <span>Location:</span>
+                        {{ config.location }}
+                    </div>
                 </div>
             </div>
-        </div>
+        </template>
         <div class="card-template-content-box" v-html="content"></div>
     </div>
 </template>
@@ -58,6 +60,10 @@ const props = defineProps({
     content: {
         type: String,
         default: '',
+    },
+    page: {
+        type: Number,
+        default: 1,
     },
 })
 

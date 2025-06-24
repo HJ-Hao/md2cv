@@ -5,6 +5,7 @@ export type TemplateMeta = {
     name: string
     className: string
     component: Component
+    getCurrentPageHeight: (page: number) => number
 }
 
 export const TemplateProvideKey = 'Templates'
@@ -49,6 +50,7 @@ const templateLoaderPlugin = {
                         ...(templates[name] || {}),
                         name: config.name || name,
                         className: config.className || '',
+                        getCurrentPageHeight: config.getCurrentPageHeight,
                     }
                 }
             }
