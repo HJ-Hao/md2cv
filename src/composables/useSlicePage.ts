@@ -1,9 +1,14 @@
-import { computed, type Ref, ref } from 'vue'
+import { computed, onMounted, ref, watch, nextTick, type Ref } from 'vue'
 import { useTemplateStore } from '@/store/template'
-import { A4_PAGE_SIZE } from '@/constants'
+import { useStyleConfigStore } from '@/store/styleConfig'
+import { useMarkdownStore } from '@/store/markdown'
+import { storeToRefs } from 'pinia'
 
 export const useSlicePage = (target: Ref<HTMLElement | null>) => {
-    const templateStore = useTemplateStore()
+    const { currentConfig, currentTemplate } = storeToRefs(useTemplateStore())
+    const { pagePadding } = storeToRefs(useStyleConfigStore())
+
+    const { result } = storeToRefs(useMarkdownStore())
     const pages = ref<Element[]>()
 
     const renderList = computed(() => {
@@ -12,16 +17,11 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
 
     const pageSize = computed(() => pages.value?.length || 1)
 
-    const PADDING = 48
-
     const getCurrentPageHeight = (page: number) => {
-        if (templateStore.currentConfig.getCurrentPageHeight) {
-            return (
-                templateStore.currentConfig.getCurrentPageHeight(page) -
-                PADDING * 2
-            )
-        }
-        return A4_PAGE_SIZE - PADDING * 2
+        return (
+            currentConfig.value.getCurrentPageHeight(page) -
+            pagePadding.value * 2
+        )
     }
 
     const createPage = (children: HTMLElement[] = []) => {
@@ -100,11 +100,32 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
     const getSlicePage = () => {
         // select content element
         const targetElement = target.value?.querySelector(
-            `.${templateStore.currentConfig.className}`
+            `.${currentConfig.value.className}`
         )
         const newPages = sliceElement(targetElement!)
         pages.value = newPages
     }
+
+    // Watch for changes in the result, currentTemplate, and pagePadding
+    // to re-slice the page when any of these change
+    watch(
+        () => [result.value, currentTemplate.value, pagePadding.value],
+        () => {
+            console.log(
+                'Re-slicing page due to changes in result, template, or padding'
+            )
+            nextTick(() => {
+                getSlicePage()
+            })
+        }
+    )
+
+    // Initial call to slice the page when the component is mounted
+    onMounted(() => {
+        nextTick(() => {
+            getSlicePage()
+        })
+    })
 
     return {
         getSlicePage,

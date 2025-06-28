@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, nextTick, watch, onMounted } from 'vue'
+import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useMarkdownStore } from '@/store/markdown'
 import { useTemplateStore } from '@/store/template'
@@ -91,10 +91,10 @@ const mdStore = useMarkdownStore()
 const templateStore = useTemplateStore()
 
 const { result, input } = storeToRefs(mdStore)
-const { currentTemplate, currentComponent } = storeToRefs(templateStore)
+const { currentComponent } = storeToRefs(templateStore)
 
 const { insert } = useEditorInsert(editorRef, input)
-const { getSlicePage, renderList } = useSlicePage(renderRef)
+const { renderList } = useSlicePage(renderRef)
 
 const { handlePrint } = useVueToPrint({
     content: previewRef as any,
@@ -155,21 +155,6 @@ const handlePreviewScroll = () => {
         isSyncingFromPreview = false
     })
 }
-
-watch(
-    () => [result.value, currentTemplate.value],
-    () => {
-        nextTick(() => {
-            getSlicePage()
-        })
-    }
-)
-
-onMounted(() => {
-    nextTick(() => {
-        getSlicePage()
-    })
-})
 
 defineExpose({
     exportPDF: () => {

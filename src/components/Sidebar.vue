@@ -34,6 +34,17 @@
             class="w-full"
             @click="exportMarkdown"
         />
+        <div class="flex items-center gap-1">
+            <i class="pi pi-palette"></i>
+            <span>样式配置</span>
+        </div>
+        <div class="mb-0.5">边距</div>
+        <Slider
+            :model-value="pagePadding"
+            :min="30"
+            :max="60"
+            @change="handleStyleConfigChange('pagePadding', $event)"
+        />
     </aside>
 </template>
 
@@ -41,14 +52,18 @@
 import { storeToRefs } from 'pinia'
 import { useMarkdownStore } from '@/store/markdown'
 import { useTemplateStore } from '@/store/template'
+import { useStyleConfigStore } from '@/store/styleConfig'
 
 defineProps<{ onExportPdf: () => void }>()
 
 const mdStore = useMarkdownStore()
 const templateStore = useTemplateStore()
+const styleConfigStore = useStyleConfigStore()
 
 const { input } = storeToRefs(mdStore)
 const { templateList, currentTemplate } = storeToRefs(templateStore)
+
+const { pagePadding } = storeToRefs(styleConfigStore)
 
 const handleMarkdownUpload = (event: any) => {
     const file = event.files?.[0]
@@ -74,5 +89,11 @@ const exportMarkdown = () => {
     a.download = 'resume.md'
     a.click()
     URL.revokeObjectURL(url)
+}
+
+const handleStyleConfigChange = (key: string, value: any) => {
+    styleConfigStore.updateStyleConfig({
+        [key]: value,
+    })
 }
 </script>

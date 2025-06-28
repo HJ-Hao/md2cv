@@ -18,6 +18,7 @@ declare module 'vue' {
     ResumeEditor: typeof import('./src/components/ResumeEditor.vue')['default']
     Sidebar: typeof import('./src/components/Sidebar.vue')['default']
     SimpleTemplate: typeof import('./src/components/templates/SimpleTemplate/index.vue')['default']
+    Slider: typeof import('primevue/slider')['default']
     Textarea: typeof import('primevue/textarea')['default']
     Toolbar: typeof import('primevue/toolbar')['default']
   }

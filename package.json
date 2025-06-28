@@ -6,7 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepare": "husky",
+    "check": "vue-tsc --noEmit"
+  },
+  "lint-staged" : {
+      "*.{ts, tsx, vue}": ["eslint", "prettier --check"]
   },
   "dependencies": {
     "@primeuix/themes": "^1.1.1",
@@ -35,6 +40,8 @@
     "eslint-plugin-prettier": "^5.4.1",
     "eslint-plugin-vue": "^10.2.0",
     "globals": "^16.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "prettier": "3.5.3",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.34.0",

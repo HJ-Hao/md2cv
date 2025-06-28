@@ -76,8 +76,8 @@ export const useEditorInsert = (editor: Ref<any>, content: Ref<string>) => {
         content.value = before + text + after
 
         nextTick(() => {
-            el.focus()
             el.setSelectionRange(newPos, newPos)
+            el.focus()
         })
     }
 

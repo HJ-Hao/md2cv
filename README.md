@@ -7,8 +7,6 @@
 - [Vue 3](https://vuejs.org/)
 - [PrimeVue](https://primevue.org/)
 - [Pinia](https://pinia.vuejs.org/)
-- [html2canvas](https://github.com/niklasvh/html2canvas)
-- [jsPDF](https://github.com/parallax/jsPDF)
 - [TailwindCSS](https://tailwindcss.com/)
 - [Markdown-it](https://github.com/markdown-it/markdown-it)
 

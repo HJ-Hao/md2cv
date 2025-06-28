@@ -1,5 +1,10 @@
 <template>
-    <div class="page flex flex-col">
+    <div
+        class="page flex flex-col"
+        :style="{
+            '--page-padding': pagePadding + 'px',
+        }"
+    >
         <div
             class="flex relative gap-2.5 mb-2.5 items-center"
             v-if="page === 1"
@@ -43,6 +48,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import ResumeAvatar from '@/components/ResumeAvatar.vue'
+import { useStyleConfigStore } from '@/store/styleConfig'
+import { storeToRefs } from 'pinia'
 
 type CustomConfig = {
     name: string
@@ -76,6 +83,8 @@ const props = defineProps({
 const config = computed(() => {
     return { ...defaultConfig, ...props.config }
 })
+
+const { pagePadding } = storeToRefs(useStyleConfigStore())
 </script>
 
 <style></style>

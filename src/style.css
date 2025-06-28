@@ -11,8 +11,8 @@ body {
 .page {
     width: 794px;
     height: 1123px;
-    margin: 16px auto;
-    padding: 48px;
+    margin: 0 auto;
+    padding: var(--page-padding);
 
     box-sizing: content-box;
 
@@ -29,15 +29,20 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
     /* 分页边框可选 */
-    border: 1px solid var(--surface-border);
+    border: 2px solid var(--color-zinc-200);
+
+    &:not(:last-child) {
+        margin-bottom: 16px;
+    }
 }
 
 .row {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     gap: 2rem;
 }
+
 
 .render-area {
     width: 794px;
@@ -48,13 +53,19 @@ body {
 }
 
 @media print {
+    body, html {
+         overflow-x: hidden
+    }
+    
     .page {
         zoom: 0.9; /* 缩小整体页面内容 */
-        padding: 48px;
+        padding: var(--page-padding);
         margin: 0;
         break-before: page;
         box-shadow: none;
         border: none;
+        overflow-x: hidden;
+        border-radius: 0;
     }
 
     .resume-avater-placeholder {

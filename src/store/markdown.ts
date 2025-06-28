@@ -88,10 +88,18 @@ export const useMarkdownStore = defineStore('counter', () => {
     const input = useLocalStorage<string>('markdown-input', defaultInput)
 
     const result = computed(() => {
-        const { data, content } = matter(input.value)
-        return {
-            data,
-            content: md.render(content),
+        try {
+            const { data, content } = matter(input.value)
+            return {
+                data,
+                content: md.render(content),
+            }
+        } catch (e) {
+            console.error('Markdown parsing error:', e)
+            return {
+                data: {},
+                content: input.value, // return raw input on error
+            }
         }
     })
 
