@@ -1,55 +1,89 @@
 <template>
     <aside
-        class="w-60 p-4 bg-surface-100 dark:bg-surface-800 border-r border-surface-300 dark:border-surface-700 flex flex-col gap-4"
+        class="w-64 p-4 bg-white dark:bg-[#1e1e2f] shadow-xl rounded-xl flex flex-col gap-6 border border-transparent"
     >
-        <h3 class="text-lg font-medium">工具栏</h3>
+        <div
+            class="flex items-center text-xl font-semibold gap-2 text-gray-800 dark:text-white"
+        >
+            <i class="pi pi-tools text-primary" />
+            <span>工具栏</span>
+        </div>
+
         <div>
-            <label class="block mb-2 text-sm font-medium">选择模板</label>
+            <label class="block mb-1 text-sm text-gray-500 dark:text-gray-300"
+                >模板选择</label
+            >
             <Dropdown
                 v-model="currentTemplate"
                 :options="templateList"
                 class="w-full"
             />
         </div>
-        <FileUpload
-            name="md"
-            accept=".md"
-            mode="basic"
-            choose-label="上传 Markdown"
-            class="w-full"
-            auto
-            customUpload
-            @select="handleMarkdownUpload"
-        />
-        <Button
-            label="导出 PDF"
-            icon="pi pi-file-pdf"
-            severity="danger"
-            class="w-full"
-            @click="onExportPdf"
-        />
-        <Button
-            label="导出 Markdown"
-            icon="pi pi-download"
-            class="w-full"
-            @click="exportMarkdown"
-        />
-        <div class="flex items-center gap-1">
-            <i class="pi pi-palette"></i>
-            <span>样式配置</span>
+
+        <div>
+            <label class="block mb-1 text-sm text-gray-500 dark:text-gray-300"
+                >上传 Markdown</label
+            >
+            <FileUpload
+                name="md"
+                accept=".md"
+                mode="basic"
+                choose-label="上传文件"
+                class="w-full"
+                auto
+                customUpload
+                @select="handleMarkdownUpload"
+            />
         </div>
-        <div class="mb-0.5">边距</div>
-        <Slider
-            :model-value="pagePadding"
-            :min="30"
-            :max="60"
-            @change="handleStyleConfigChange('pagePadding', $event)"
-        />
+
+        <div class="flex flex-col gap-2">
+            <SidebarButton
+                icon="pi pi-file-pdf"
+                label="导出 PDF"
+                @click="onExportPdf"
+            />
+            <SidebarButton
+                icon="pi pi-download"
+                label="导出 Markdown"
+                @click="exportMarkdown"
+            />
+        </div>
+
+        <div class="space-y-1">
+            <div
+                class="flex items-center text-sm font-medium gap-2 text-gray-600 dark:text-gray-300"
+            >
+                <i class="pi pi-palette" />
+                <span>样式配置</span>
+            </div>
+
+            <SliderSetting
+                label="边距"
+                :min="30"
+                :max="60"
+                :model-value="pagePadding"
+                @update:model-value="
+                    handleStyleConfigChange('pagePadding', $event)
+                "
+            />
+
+            <SliderSetting
+                label="字体大小"
+                :model-value="fontSize"
+                :min="12"
+                :max="24"
+                @update:model-value="
+                    handleStyleConfigChange('fontSize', $event)
+                "
+            />
+        </div>
     </aside>
 </template>
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import SliderSetting from './SliderSetting.vue'
+import SidebarButton from './SidebarButton.vue'
 import { useMarkdownStore } from '@/store/markdown'
 import { useTemplateStore } from '@/store/template'
 import { useStyleConfigStore } from '@/store/styleConfig'
@@ -63,7 +97,7 @@ const styleConfigStore = useStyleConfigStore()
 const { input } = storeToRefs(mdStore)
 const { templateList, currentTemplate } = storeToRefs(templateStore)
 
-const { pagePadding } = storeToRefs(styleConfigStore)
+const { pagePadding, fontSize } = storeToRefs(styleConfigStore)
 
 const handleMarkdownUpload = (event: any) => {
     const file = event.files?.[0]

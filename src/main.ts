@@ -4,7 +4,7 @@ import PrimeVue from 'primevue/config'
 import { createPinia } from 'pinia'
 import App from './App.vue'
 import myTheme from '@/plugins/primeTheme'
-import templateLoader, { loadTemplateStyles } from '@/plugins/templateLoader'
+import templateLoader from '@/plugins/templateLoader'
 
 const pinia = createPinia()
 
@@ -20,7 +20,8 @@ app.use(PrimeVue, {
     .use(templateLoader)
     .use(pinia)
 
+app.mount('#app')
 // load template styles before mounting the app
-loadTemplateStyles().then(() => {
-    app.mount('#app')
-})
+// loadTemplateStyles().then(() => {
+//     app.mount('#app')
+// })

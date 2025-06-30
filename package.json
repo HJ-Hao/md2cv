@@ -10,8 +10,11 @@
     "prepare": "husky",
     "check": "vue-tsc --noEmit"
   },
-  "lint-staged" : {
-      "*.{ts, tsx, vue}": ["eslint", "prettier --check"]
+  "lint-staged": {
+    "*.{ts, tsx, vue}": [
+      "eslint",
+      "prettier --check"
+    ]
   },
   "dependencies": {
     "@primeuix/themes": "^1.1.1",
@@ -34,6 +37,7 @@
     "@primevue/auto-import-resolver": "^4.3.4",
     "@types/node": "^22.15.19",
     "@vitejs/plugin-vue": "^5.2.3",
+    "@vitejs/plugin-vue-jsx": "^5.0.1",
     "@vue/tsconfig": "^0.7.0",
     "eslint": "^9.28.0",
     "eslint-config-prettier": "^10.1.5",

@@ -15,7 +15,8 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    "jsx": "preserve"
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"]
 }

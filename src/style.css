@@ -53,18 +53,24 @@ body {
 }
 
 @media print {
+    @page {
+        margin: 0;
+        size: A4;
+    }
+
     body, html {
-         overflow-x: hidden
+         overflow: hidden
     }
     
     .page {
-        zoom: 0.9; /* 缩小整体页面内容 */
+        /* need fixed */
+        zoom: 0.9;
         padding: var(--page-padding);
         margin: 0;
         break-before: page;
         box-shadow: none;
         border: none;
-        overflow-x: hidden;
+        overflow: hidden;
         border-radius: 0;
     }
 

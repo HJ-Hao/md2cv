@@ -1,17 +1,18 @@
 .simple-template-content-box {
+    * {
+        font-size: var(--page-font-size);
+    }
+
     h1 {
-        font-size: var(--text-2xl);
+        font-size: calc(var(--page-font-size) * 1.4);
         font-weight: bold;
         border-bottom: 2px solid var(--color-zinc-800);
         margin-bottom: 0.1em;
     }
 
-    h2 {
-        font-size: var(--text-xl);
-    }
 
     h3 {
-        font-size: var(--text-lg);
+        /* font-size: var(--text-lg); */
         color: var(--color-zinc-500);
     }
 

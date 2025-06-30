@@ -6,7 +6,7 @@ import { storeToRefs } from 'pinia'
 
 export const useSlicePage = (target: Ref<HTMLElement | null>) => {
     const { currentConfig, currentTemplate } = storeToRefs(useTemplateStore())
-    const { pagePadding } = storeToRefs(useStyleConfigStore())
+    const { pagePadding, fontSize } = storeToRefs(useStyleConfigStore())
 
     const { result } = storeToRefs(useMarkdownStore())
     const pages = ref<Element[]>()
@@ -99,9 +99,7 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
 
     const getSlicePage = () => {
         // select content element
-        const targetElement = target.value?.querySelector(
-            `.${currentConfig.value.className}`
-        )
+        const targetElement = target.value?.querySelector(`.template-content`)
         const newPages = sliceElement(targetElement!)
         pages.value = newPages
     }
@@ -109,7 +107,12 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
     // Watch for changes in the result, currentTemplate, and pagePadding
     // to re-slice the page when any of these change
     watch(
-        () => [result.value, currentTemplate.value, pagePadding.value],
+        () => [
+            result.value,
+            currentTemplate.value,
+            pagePadding.value,
+            fontSize.value,
+        ],
         () => {
             console.log(
                 'Re-slicing page due to changes in result, template, or padding'
