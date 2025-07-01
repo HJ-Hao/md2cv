@@ -2,7 +2,7 @@ import { defineComponent, computed, type PropType } from 'vue'
 import BaseTemplate from '../BaseTemplate'
 import ResumeAvatar from '@/components/ResumeAvatar.vue'
 import { A4_PAGE_SIZE } from '@/constants'
-import './index.css'
+import '@/style/templates/simpleTemplate.css'
 
 const defaultConfig = {
     name: 'Your Name',
@@ -17,7 +17,7 @@ const className = 'simple-template-content-box'
 
 export const getCurrentPageHeight = (page: number) => {
     if (page === 1) {
-        return A4_PAGE_SIZE - 120
+        return A4_PAGE_SIZE - 130
     }
     return A4_PAGE_SIZE
 }

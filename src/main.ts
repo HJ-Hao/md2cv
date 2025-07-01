@@ -1,4 +1,4 @@
-import './style.css'
+import '@/style/index.css'
 import { createApp } from 'vue'
 import PrimeVue from 'primevue/config'
 import { createPinia } from 'pinia'
@@ -21,7 +21,3 @@ app.use(PrimeVue, {
     .use(pinia)
 
 app.mount('#app')
-// load template styles before mounting the app
-// loadTemplateStyles().then(() => {
-//     app.mount('#app')
-// })

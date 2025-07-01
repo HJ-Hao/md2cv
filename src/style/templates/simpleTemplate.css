@@ -1,0 +1,14 @@
+.simple-template-content-box {
+    h1 {
+        font-size: calc(var(--page-font-size) * 1.4);
+        font-weight: bold;
+        border-bottom: 2px solid var(--color-zinc-800);
+        margin-bottom: 0.2em;
+    }
+
+
+    h2 {
+        font-weight: bold;
+        margin-bottom: 0.2em;
+    }
+}

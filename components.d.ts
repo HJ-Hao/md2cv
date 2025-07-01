@@ -8,18 +8,13 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
-    BaseTemplate: typeof import('./src/components/templates/BaseTemplate.vue')['default']
     Button: typeof import('primevue/button')['default']
-    CardTemplate: typeof import('./src/components/templates/CardTemplate/index.vue')['default']
     Dropdown: typeof import('primevue/dropdown')['default']
     Editor: typeof import('./src/components/Editor.vue')['default']
     FileUpload: typeof import('primevue/fileupload')['default']
-    Image: typeof import('primevue/image')['default']
     ResumeAvatar: typeof import('./src/components/ResumeAvatar.vue')['default']
-    ResumeEditor: typeof import('./src/components/ResumeEditor.vue')['default']
     Sidebar: typeof import('./src/components/Sidebar.vue')['default']
     SidebarButton: typeof import('./src/components/SidebarButton.vue')['default']
-    SimpleTemplate: typeof import('./src/components/templates/SimpleTemplate/index.vue')['default']
     Slider: typeof import('primevue/slider')['default']
     SliderSetting: typeof import('./src/components/SliderSetting.vue')['default']
     Textarea: typeof import('primevue/textarea')['default']

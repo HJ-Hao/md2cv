@@ -8,29 +8,40 @@
                 class="flex flex-wrap gap-2 border-b border-surface-300 dark:border-surface-700"
             >
                 <Button
-                    label="H1"
                     size="small"
                     text
-                    aria-label="H1"
-                    tooltip="H1"
                     @click="insert(EditorInsertType.HEADING)"
-                />
+                >
+                    <Heading1 :size="20" />
+                </Button>
                 <Button
-                    icon="pi pi-list"
                     size="small"
                     text
-                    aria-label="LIST"
-                    tooltip="LIST"
                     @click="insert(EditorInsertType.LIST)"
-                />
+                >
+                    <List :size="20" />
+                </Button>
                 <Button
-                    icon="pi pi-bars"
                     size="small"
                     text
-                    aria-label=""
-                    tooltip=""
+                    @click="insert(EditorInsertType.BOLD)"
+                >
+                    <Bold :size="20" />
+                </Button>
+                <Button
+                    size="small"
+                    text
+                    @click="insert(EditorInsertType.ITALIC)"
+                >
+                    <Italic :size="20" />
+                </Button>
+                <Button
+                    size="small"
+                    text
                     @click="insert(EditorInsertType.LAYOUT)"
-                />
+                >
+                    <Columns2 :size="20" />
+                </Button>
             </div>
 
             <!-- 编辑器输入框 -->
@@ -58,7 +69,6 @@
             :content="content"
             :page="index + 1"
         />
-        <!-- <div v-html="renderContent" /> -->
     </div>
 
     <!-- hidden box to slice page -->
@@ -82,6 +92,7 @@ import {
     EditorInsertType,
 } from '@/composables/useEditorInsert'
 import { useVueToPrint } from 'vue-to-print'
+import { Heading1, List, Columns2, Bold, Italic } from 'lucide-vue-next'
 
 const renderRef = ref<HTMLElement | null>(null)
 const previewRef = ref<HTMLElement | null>(null)

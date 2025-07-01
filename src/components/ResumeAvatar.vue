@@ -15,17 +15,15 @@
             v-else
             class="flex items-center justify-center border-surface-300 bg-surface-100 w-full h-full"
         >
-            <i
-                class="resume-avater-placeholder pi pi-user text-4xl text-surface-500"
-            ></i>
+            <User class="resume-avater-placeholder" :size="20" />
         </div>
 
         <div
             v-if="uploadedImage"
-            class="absolute -top-2.5 -right-2.5 w-6 h-6 bg-surface-900 text-center rounded-full cursor-pointer overflow-hidden opacity-0 group-hover:opacity-100 transition"
+            class="absolute -top-2.5 -right-2.5 w-6 h-6 bg-surface-900 flex items-center justify-center rounded-full cursor-pointer overflow-hidden opacity-0 group-hover:opacity-100 transition"
             @click="deleteImage"
         >
-            <i class="pi pi-times text-white"></i>
+            <X class="text-white" :size="20" />
         </div>
 
         <input
@@ -39,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import { X, User } from 'lucide-vue-next'
 import { useImageStorage } from '@/composables/useImageStorage'
 
 defineProps({

@@ -1,3 +1,4 @@
+import '@/style/templates/baseTemplate.css'
 import { defineComponent } from 'vue'
 import { storeToRefs } from 'pinia'
 import { A4_PAGE_SIZE } from '@/constants'

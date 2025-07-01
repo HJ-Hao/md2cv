@@ -40,33 +40,4 @@ const templateLoaderPlugin = {
     },
 }
 
-// unuse logic
-export const loadTemplateStyles = () => {
-    const styleModules = import.meta.glob(
-        '../components/templates/**/index.{css,scss}',
-        { query: '?url', import: 'default' }
-    ) as Record<string, () => Promise<string>>
-
-    return new Promise<void>((resolve) => {
-        Promise.all(Object.values(styleModules).map((module) => module())).then(
-            (hrefs) => {
-                const loadPromises = hrefs.map((href) => {
-                    return new Promise<void>((res) => {
-                        const link = document.createElement('link')
-                        link.rel = 'stylesheet'
-                        link.href = href
-                        link.onload = () => res()
-                        link.onerror = () => {
-                            res()
-                        }
-                        document.head.appendChild(link)
-                    })
-                })
-
-                Promise.all(loadPromises).then(() => resolve())
-            }
-        )
-    })
-}
-
 export default templateLoaderPlugin

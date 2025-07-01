@@ -1,0 +1,35 @@
+.simple-template-content-box {
+    * {
+        font-size: var(--page-font-size);
+    }
+
+    p {
+        margin-bottom: 0.5em;
+    }
+
+    ul {
+        list-style-type: disc;
+    }
+
+    ol {
+        list-style-type: decimal;
+    }
+
+    ul, ol {
+        list-style-position: inside;
+        padding-left: 1.5em;
+        margin-bottom: 0.5em;
+    }
+
+    li {
+        margin-bottom: 0.25em;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    em {
+        font-style: italic;
+    }
+}

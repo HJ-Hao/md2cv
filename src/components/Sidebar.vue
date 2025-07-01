@@ -5,7 +5,7 @@
         <div
             class="flex items-center text-xl font-semibold gap-2 text-gray-800 dark:text-white"
         >
-            <i class="pi pi-tools text-primary" />
+            <ToolCase />
             <span>工具栏</span>
         </div>
 
@@ -37,23 +37,23 @@
         </div>
 
         <div class="flex flex-col gap-2">
-            <SidebarButton
-                icon="pi pi-file-pdf"
-                label="导出 PDF"
-                @click="onExportPdf"
-            />
-            <SidebarButton
-                icon="pi pi-download"
-                label="导出 Markdown"
-                @click="exportMarkdown"
-            />
+            <SidebarButton label="导出 PDF" @click="onExportPdf">
+                <template #icon>
+                    <Download :size="16" />
+                </template>
+            </SidebarButton>
+            <SidebarButton label="导出 Markdown" @click="exportMarkdown">
+                <template #icon>
+                    <FileText :size="16" />
+                </template>
+            </SidebarButton>
         </div>
 
         <div class="space-y-1">
             <div
                 class="flex items-center text-sm font-medium gap-2 text-gray-600 dark:text-gray-300"
             >
-                <i class="pi pi-palette" />
+                <Palette :size="20" />
                 <span>样式配置</span>
             </div>
 
@@ -87,6 +87,7 @@ import SidebarButton from './SidebarButton.vue'
 import { useMarkdownStore } from '@/store/markdown'
 import { useTemplateStore } from '@/store/template'
 import { useStyleConfigStore } from '@/store/styleConfig'
+import { Download, ToolCase, Palette, FileText } from 'lucide-vue-next'
 
 defineProps<{ onExportPdf: () => void }>()
 

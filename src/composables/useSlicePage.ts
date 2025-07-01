@@ -32,6 +32,16 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
         return page
     }
 
+    // only calculate the height of the element with its bottom margin
+    // ignore the top margin because of margin collapse, style set marginTop: 0 !important
+    const getElementHeightWithBottomMargin = (el: HTMLElement): number => {
+        const style = getComputedStyle(el)
+        const marginBottom = parseFloat(style.marginBottom || '0')
+        const height = el.getBoundingClientRect().height
+        return height + marginBottom
+    }
+
+    // todo: logic improvement, add sliceable element support
     const sliceElement = (element: Element): Element[] => {
         const children = Array.from(element.children)
         let currentPage = 1
@@ -41,10 +51,11 @@ export const useSlicePage = (target: Ref<HTMLElement | null>) => {
 
         let resetPageHeight = PageSize // A4 page height in pixels (approximate) 1123 - 48 * 2 (header and footer)
         const pages = [currentPageElement]
+
         while (children.length > 0) {
             const el = children.shift() as HTMLElement
             // Need Improve: height no margin
-            const height = el.getBoundingClientRect().height
+            const height = getElementHeightWithBottomMargin(el)
 
             // if the element is taller than the page size, split it
             if (height > PageSize) {

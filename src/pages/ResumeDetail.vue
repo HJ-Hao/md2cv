@@ -18,12 +18,13 @@
                         @click="handleChangeDarkMode"
                     /> -->
                     <Button
-                        icon="pi pi-github"
                         severity="secondary"
                         rounded
                         text
                         @click="handleLinkToGitHub"
-                    />
+                    >
+                        <Github :size="20" />
+                    </Button>
                 </div>
             </template>
         </Toolbar>
@@ -39,6 +40,7 @@
 import { ref } from 'vue'
 import SideBar from '@/components/Sidebar.vue'
 import Editor from '@/components/Editor.vue'
+import { Github } from 'lucide-vue-next'
 const editorRef = ref<any>(null)
 const exporting = ref(false)
 

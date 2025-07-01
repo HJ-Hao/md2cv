@@ -1,7 +1,7 @@
 import { defineComponent, computed, type PropType } from 'vue'
 import BaseTemplate from '../BaseTemplate'
 import { A4_PAGE_SIZE } from '@/constants'
-import './index.css'
+import '@/style/templates/cardTemplate.css'
 
 const defaultConfig = {
     name: 'Your Name',

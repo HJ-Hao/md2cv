@@ -1,6 +1,5 @@
 @import 'tailwindcss';
 @import 'tailwindcss-primeui';
-@import 'primeicons/primeicons.css';
 
 @custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
 
@@ -14,21 +13,18 @@ body {
     margin: 0 auto;
     padding: var(--page-padding);
 
-    box-sizing: content-box;
+    box-sizing: border-box;
 
     position: relative;
 
     overflow: hidden;
 
-    /* 背景适配亮暗模式 */
     background-color: var(--surface-ground);
     color: var(--text-color);
 
-    /* 柔和阴影 + 圆角 */
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 
-    /* 分页边框可选 */
     border: 2px solid var(--color-zinc-200);
 
     &:not(:last-child) {
@@ -54,17 +50,20 @@ body {
 
 @media print {
     @page {
-        margin: 0;
         size: A4;
+        margin: 0; /* 清除打印默认边距 */
     }
 
     body, html {
-         overflow: hidden
+        padding: 0;
+        margin: 0;
+        overflow: hidden
     }
     
     .page {
-        /* need fixed */
-        zoom: 0.9;
+        width: 794px;
+        height: 1123px;
+        box-sizing: border-box;
         padding: var(--page-padding);
         margin: 0;
         break-before: page;
