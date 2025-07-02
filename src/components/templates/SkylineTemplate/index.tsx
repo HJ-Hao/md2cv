@@ -1,19 +1,18 @@
 import { defineComponent, computed, type PropType } from 'vue'
 import BaseTemplate from '../BaseTemplate'
-import ResumeAvatar from '@/components/ResumeAvatar.vue'
 import { A4_PAGE_SIZE } from '@/constants'
-import '@/style/templates/simpleTemplate.css'
+import ResumeAvatar from '@/components/ResumeAvatar.vue'
+import '@/style/templates/skylineTemplate.css'
 
 const defaultConfig = {
     name: 'Your Name',
-    blog: 'https://yourblog.com',
     phone: '123-456-7890',
-    location: 'Your Location',
+    email: 'Your Email',
 }
 
-export const name = 'SimpleTemplate'
+export const name = 'skylineTemplate'
 
-const className = 'simple-template-content-box'
+const className = 'skyline-template-content-box'
 
 export const getCurrentPageHeight = (page: number) => {
     if (page === 1) {
@@ -23,10 +22,9 @@ export const getCurrentPageHeight = (page: number) => {
 }
 
 export default defineComponent({
-    name: 'SimpleTemplate',
+    name: 'CardTemplate',
     components: {
         BaseTemplate,
-        ResumeAvatar,
     },
     props: {
         config: {
@@ -55,22 +53,12 @@ export default defineComponent({
                         </div>
                         <div class="flex items-center text-sm">
                             <div class="text-gray-500 not-last:after:content-['|'] after:m-1.5">
-                                <span>Blog:</span>
-                                <a
-                                    href="javascript:void(0)"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {config.value.blog}
-                                </a>
-                            </div>
-                            <div class="text-gray-500 not-last:after:content-['|'] after:m-1.5">
-                                <span>Phone:</span>
+                                <span>电话:</span>
                                 {config.value.phone}
                             </div>
                             <div class="text-gray-500 not-last:after:content-['|'] after:m-1.5">
-                                <span>Location:</span>
-                                {config.value.location}
+                                <span>电子邮箱:</span>
+                                {config.value.email}
                             </div>
                         </div>
                     </div>

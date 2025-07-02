@@ -1,15 +1,33 @@
 .card-template-content-box {
+
     h1 {
+        position: relative;
         font-size: calc(var(--page-font-size) * 1.4);
-        color: var(--color-blue-500);
-        padding-left: 5px;
-        border-left: 2px solid;
-        margin-bottom: 0.2em;
-        background-color: var(--color-sky-100);
+        font-weight: bold;
+        padding: 0 0.5em;
+        margin-bottom: 0.5rem;
+        border-bottom: 1px solid var(--color-zinc-900);
+        z-index: 0;
+        overflow: hidden;
+
+        color: var(--color-white);
+
+        &::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 150px; /* 控制梯形宽度 */
+            background-color: var(--color-zinc-900);
+            clip-path: polygon(0 0, 95% 0, 100% 100%, 0% 100%);
+            z-index: -1;
+        }
     }
 
     h2 {
         font-weight: bold;
+        margin-bottom: 0.5em;
     }
 
     h3 {

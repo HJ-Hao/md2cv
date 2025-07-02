@@ -98,7 +98,7 @@ export const useMarkdownStore = defineStore('counter', () => {
             console.error('Markdown parsing error:', e)
             return {
                 data: {},
-                content: input.value, // return raw input on error
+                content: md.render(input.value), // return raw input on error
             }
         }
     })

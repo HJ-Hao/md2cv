@@ -1,13 +1,13 @@
 import { defineComponent, computed, type PropType } from 'vue'
 import BaseTemplate from '../BaseTemplate'
 import { A4_PAGE_SIZE } from '@/constants'
+import ResumeAvatar from '@/components/ResumeAvatar.vue'
 import '@/style/templates/cardTemplate.css'
 
 const defaultConfig = {
     name: 'Your Name',
-    blog: 'https://yourblog.com',
     phone: '123-456-7890',
-    location: 'Your Location',
+    email: 'Your Email',
 }
 
 export const name = 'CardTemplate'
@@ -16,7 +16,7 @@ const className = 'card-template-content-box'
 
 export const getCurrentPageHeight = (page: number) => {
     if (page === 1) {
-        return A4_PAGE_SIZE - 80
+        return A4_PAGE_SIZE - 130
     }
     return A4_PAGE_SIZE
 }
@@ -47,31 +47,22 @@ export default defineComponent({
         const slots = {
             header: () => (
                 <div class="flex relative gap-2.5 mb-2.5 items-center">
-                    <div class="flex flex-col flex-1 gap-5">
-                        <div class="text-4xl font-bold">
+                    <div class="flex flex-col flex-1 gap-2">
+                        <div class="text-3xl font-bold">
                             {config.value.name}
                         </div>
-                        <div class="flex items-center">
+                        <div class="flex items-center text-sm">
                             <div class="text-gray-500 not-last:after:content-['|'] after:m-1.5">
-                                <span>Blog:</span>
-                                <a
-                                    href="javascript:void(0)"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                >
-                                    {config.value.blog}
-                                </a>
-                            </div>
-                            <div class="text-gray-500 not-last:after:content-['|'] after:m-1.5">
-                                <span>Phone:</span>
+                                <span>电话:</span>
                                 {config.value.phone}
                             </div>
                             <div class="text-gray-500 not-last:after:content-['|'] after:m-1.5">
-                                <span>Location:</span>
-                                {config.value.location}
+                                <span>电子邮箱:</span>
+                                {config.value.email}
                             </div>
                         </div>
                     </div>
+                    <ResumeAvatar />
                 </div>
             ),
         }

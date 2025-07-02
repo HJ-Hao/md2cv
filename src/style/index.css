@@ -3,13 +3,18 @@
 
 @custom-variant dark (&:where(.my-app-dark, .my-app-dark *));
 
+:root {
+    --page-width: 794px;
+    --page-height: 1123px;
+}
+
 body {
     overflow-y: hidden;
 }
 
 .page {
-    width: 794px;
-    height: 1123px;
+    width: var(--page-width);
+    height: var(--page-height);
     margin: 0 auto;
     padding: var(--page-padding);
 
@@ -41,7 +46,7 @@ body {
 
 
 .render-area {
-    width: 794px;
+    width: var(--page-width);
     position: absolute;
     left: 0;
     top: 0;
@@ -61,8 +66,8 @@ body {
     }
     
     .page {
-        width: 794px;
-        height: 1123px;
+        width: var(--page-width);
+        height: var(--page-height);
         box-sizing: border-box;
         padding: var(--page-padding);
         margin: 0;
